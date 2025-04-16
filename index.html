@@ -24,11 +24,9 @@
 
         <h1>The Electric Sigil Machine</h1> 
 
-        <textarea id="intention" placeholder="Enter your intention..."></textarea>
-
-        <button>Generate Sigil</button>
-
-        <canvas id="sigilCanvas" width="500" height="500"></canvas>
+        <input id="intention" placeholder="Enter your intention...">
+        <button onclick="generateSigil()">Generate Sigil</button>
+        <canvas id='sigilCanvas' width="500" height="500"></canvas>
 
     </div>
 
@@ -38,32 +36,82 @@
 
         function generateSigil() {
 
-            const input = document.getElementById("intention").value.toUpperCase(); 
+            const input = document.getElementById('intention').value.toUpperCase();
             const canvas = document.getElementById("sigilCanvas"); 
-            const ctx = canvas.getContext("2D"); 
-            ctx.clearRect (0, 0, canvas.width, canvas.height);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            let lettersOnly = input.replace (/[^A-Z]/g, "")
-            let noVowels = lettersOnly.replace(/[AEIOU]/g, "")
-            let unique = "";
+            let lettersOnly = input.replace(/[^A-Z]/g, '');
+            let noVowels = lettersOnly.replace(/[AEIOU]/g, '');
+            let unique = '';
             for (let char of noVowels) {
-                if (!unique.includes(char)){
+                if (!unique.includes(char)) {
                     unique += char;
                 }
             }
 
             const centerX = canvas.width / 2;
-            const centerY = canvas.height /2;
-            const radius = 150; 
-            runePoints = unique.split("").map((_, i) => {
+            const centerY = canvas.height / 2;
+            const radius = 150;
+            runePoints = unique.split('').map((_, i) => {
                 return {
                     x: centerX + (Math.random() * radius * 2 - radius),
                     y: centerY + (Math.random() * radius * 2 - radius),
-                    type: Math.floor(Math.random() * 3)
-                }
+                    type: Math.floor(Math.random() * 3) 
+                };
             });
 
+            animateSigil(ctx, runePoints);
+        }
 
+        function animateSigil(ctx, points) {
+            let i = 0;
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+
+            function drawStep() {
+                if (i < points.length - 1) {
+                    ctx.lineTo(points[i + 1].x, points[i + 1].y);
+                    ctx.stroke();
+                    drawGlyph(ctx, points[i], '#ffffff');
+                    i++;
+                    requestAnimationFrame(drawStep);
+                } else {
+                    ctx.closePath();
+                    ctx.stroke();
+                    drawGlyph(ctx, points[i], '#ffffff');
+                }
+            }
+
+            drawStep();
+        }
+
+        function drawGlyph(ctx, pt, color) {
+            ctx.fillStyle = color;
+            ctx.strokeStyle = color; 
+            ctx.beginPath();
+            switch (pt.type) {
+                case 0: // circle
+                    ctx.arc(pt.x, pt.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                case 1: // cross
+                    ctx.moveTo(pt.x - 5, pt.y - 5);
+                    ctx.lineTo(pt.x + 5, pt.y + 5);
+                    ctx.moveTo(pt.x + 5, pt.y - 5);
+                    ctx.lineTo(pt.x - 5, pt.y + 5);
+                    ctx.stroke();
+                    break;
+                case 2: // Triangle
+                    ctx.moveTo(pt.x, pt.y - 5);
+                    ctx.lineTo(pt.x + 5, pt.y + 5);
+                    ctx.lineTo(pt.x - 5, pt.y + 5);
+                    ctx.closePath();
+                    ctx.stroke();
+                    break;
+             }
         }
 
     </script>
