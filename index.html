@@ -8,12 +8,14 @@
     <title>Electric Sigil Machine</title>
 
     <style>
-        canvas{
-            width: 20%;
-            background: #000;
-            border: 2px solid #ffffff;
-            border-radius: 5px;
-        }
+
+    canvas {
+        width: 70%;
+        background: #000;
+        border: 2px solid #ffffff;
+        border-radius: 5px;
+    }
+
     </style>
 
 </head>
@@ -23,9 +25,9 @@
     <div class="container">
 
         <h1>The Electric Sigil Machine</h1> 
-
         <input id="intention" placeholder="Enter your intention...">
         <button onclick="generateSigil()">Generate Sigil</button>
+        <button onclick="downloadSigil()">Download Sigil</button>
         <canvas id='sigilCanvas' width="500" height="500"></canvas>
 
     </div>
@@ -112,6 +114,14 @@
                     ctx.stroke();
                     break;
              }
+        }
+
+        function downloadSigil() {
+            const canvas = document.getElementById('sigilCanvas');
+            const link = document.createElement('a');
+            link.download = 'sigil.png';
+            link.href = canvas.toDataURL();
+            link.click();
         }
 
     </script>
