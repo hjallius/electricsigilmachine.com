@@ -5,16 +5,14 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="styles.css">
     <title>Electric Sigil Machine</title>
 
-    <style>
-        canvas{
-            width: 20%;
-            background: #000;
-            border: 2px solid #ffffff;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&family=Share+Tech+Mono&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -23,9 +21,9 @@
     <div class="container">
 
         <h1>The Electric Sigil Machine</h1> 
-
         <input id="intention" placeholder="Enter your intention...">
         <button onclick="generateSigil()">Generate Sigil</button>
+        <button onclick="downloadSigil()">Download Sigil</button>
         <canvas id='sigilCanvas' width="500" height="500"></canvas>
 
     </div>
@@ -112,6 +110,14 @@
                     ctx.stroke();
                     break;
              }
+        }
+
+        function downloadSigil() {
+            const canvas = document.getElementById('sigilCanvas');
+            const link = document.createElement('a');
+            link.download = 'sigil.png';
+            link.href = canvas.toDataURL();
+            link.click();
         }
 
     </script>
