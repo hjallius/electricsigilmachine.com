@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <!-- metadata -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <title>Electric Sigil Machine</title>
@@ -15,18 +15,28 @@
     </style>
 </head>
 <body>
-    <!-- page container -->
     <div class="container">
-        <!-- header -->
-        <h1>The Electric Sigil Machine</h1>
-        <!-- box for text input -->
-        <div class="input-box">
-            <textarea id="intention" placeholder="Enter your intention here..."></textarea>
-        <!-- button to submit text -->
+        <h1>The Electric Sigil Machine</h1> 
+        <textarea id="intention" placeholder="Enter your intention..."></textarea>
         <button>Generate Sigil</button>
-        </div> 
-        <!-- box for sigil output -->
-         <canvas id="sigil-box" width="500" height="500"></canvas>
+        <canvas id="sigilCanvas" width="500" height="500"></canvas>
     </div>
+    <script>
+        let runePoints = [] 
+        function generateSigil() {
+            const input = document.getElementById("intention").value.toUpperCase(); 
+            const canvas = document.getElementById("sigilCanvas"); 
+            const ctx = canvas.getContext("2D"); 
+            ctx.clearRect (0, 0, canvas.width, canvas.height);
+            let lettersOnly = input.replace (/[^A-Z]/g, "")
+            let noVowels = lettersOnly.replace(/[AEIOU]/g, "")
+            let unique = "";
+            for (let char of noVowels) {
+                if (!unique.includes(char)){
+                    unique += char;
+                }
+            }
+        }
+    </script>
 </body>
 </html>
