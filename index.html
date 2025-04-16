@@ -2,9 +2,11 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <title>Electric Sigil Machine</title>
+
     <style>
         canvas{
             width: 20%;
@@ -13,21 +15,34 @@
             border-radius: 5px;
         }
     </style>
+
 </head>
+
 <body>
+
     <div class="container">
+
         <h1>The Electric Sigil Machine</h1> 
+
         <textarea id="intention" placeholder="Enter your intention..."></textarea>
+
         <button>Generate Sigil</button>
+
         <canvas id="sigilCanvas" width="500" height="500"></canvas>
+
     </div>
+
     <script>
+
         let runePoints = [] 
+
         function generateSigil() {
+
             const input = document.getElementById("intention").value.toUpperCase(); 
             const canvas = document.getElementById("sigilCanvas"); 
             const ctx = canvas.getContext("2D"); 
             ctx.clearRect (0, 0, canvas.width, canvas.height);
+
             let lettersOnly = input.replace (/[^A-Z]/g, "")
             let noVowels = lettersOnly.replace(/[AEIOU]/g, "")
             let unique = "";
@@ -36,7 +51,23 @@
                     unique += char;
                 }
             }
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height /2;
+            const radius = 150; 
+            runPoints = unique.split("").map((_, i) => {
+                return {
+                    x: centerX + (Math.random() * radius * 2 - radius),
+                    y: centerY + (Math.random() * radius * 2 - radius),
+                    type: Math.floor(Math.random() * 3)
+                }
+            });
+
+
         }
+
     </script>
+
 </body>
+
 </html>
