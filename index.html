@@ -5,6 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <title>Electric Sigil Machine</title>
+    <style>
+        
+        canvas{
+            width: 20%;
+            background: #000;
+            border: 2px solid #ffffff;
+            border-radius: 5px;
+            
+        }
+    </style>
 </head>
 <body>
     <!-- page container -->
@@ -15,6 +25,8 @@
         <div class="input-box">
             <textarea id="intention" placeholder="Enter your intention here..."></textarea>
         </div> 
+        <!-- box for sigil output -->
+         <canvas id="sigil-box" width="500" height="500"></canvas>
     </div>
 </body>
 </html>
